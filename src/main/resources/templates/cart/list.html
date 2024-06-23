@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Košarica</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        .button-container {
+            margin-top: 20px;
+        }
+        .navbar-custom {
+            background-color: #C5272F;
+            padding: 0 10px;
+        }
+        .navbar-custom .navbar-brand,
+        .navbar-custom .navbar-nav .nav-link {
+            color: #FFFFFF;
+        }
+
+
+
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand" href="articles">Webshop</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/articles">Artikli</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/categories">Kategorije</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/colors">Boje </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/cart">Košarica</a>
+            </li>
+            <li  th:if="${isAdmin}"  class="nav-item">
+                <a class="nav-link" href="/admin">Admin logovi</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Prijava</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container ">
+    <h2 class="mt-4 mb-4">Košarica</h2>
+
+    <table class="table">
+        <thead class="thead">
+        <tr>
+            <th scope="col">Artikl</th>
+            <th scope="col">Količina</th>
+            <th scope="col">Cijena</th>
+            <th scope="col">Akcije</th>
+        </tr>
+        </thead>
+        <tbody id="category-table-body">
+        <tr th:each="cartItem : ${cartItems}">
+            <td th:text="${cartItem.article.getName()}"></td>
+            <td>
+                <form  class="d-flex align-content-center"  th:action="@{/cart/edit/{id}(id=${cartItem.id})}" method="post">
+                    <input type="number" id="quantity" name="quantity" class="form-control mx-2" th:value="${cartItem.quantity}" min="1" style="width: 60px;" />
+                    <button type="submit" class="btn btn-primary btn-sm mt-2">Promijeni količinu</button>
+                </form>
+            </td>
+            <td>
+                <span th:text="${cartItem.article.getPrice() * cartItem.quantity}"></span> USD
+            </td>
+            <td>
+                <form th:action="@{/cart/delete/{id}(id=${cartItem.id})}" method="post"
+                       style="display:inline;" onsubmit="return confirmDelete();">
+                    <button type="submit" class="btn btn-danger btn-sm">Obriši</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h3 class="mt-4 mb-4">Ukupno: <span th:text="${totalValue}"></span> USD</h3>
+    <div class="d-flex mb-1">
+    <form th:if="${isAdmin || isUser}"  th:action="@{/cart/buy}" method="post" class="me-2"
+          style="display:inline;" onsubmit="return confirmBuy();">
+        <button type="submit" class="btn btn-primary btn-sm">Plati gotovinom</button>
+    </form>
+        <form th:if="${isAdmin || isUser}"  th:action="@{/paypal/buy}" method="post" class="me-2"
+              onsubmit="return confirmBuy();">
+            <button type="submit" class="btn btn-primary btn-sm">PayPal</button>
+        </form>
+
+    <form th:action="@{/cart/delete/all}" method="post"
+          style="display:inline;" onsubmit="return confirmDeleteAll();">
+        <button type="submit" class="btn btn-danger btn-sm">Isprazni košaricu</button>
+    </form>
+    </div>
+
+    <div th:if="${isAdmin || isUser}" class="button-container mt-5">
+        <a th:href="${isAdmin ? '/purchase/admin' : '/purchase/user'}" class="btn btn-primary btn-sm">Pregledaj prijašnje kupnje</a>
+    </div>
+
+    <script>
+        function confirmDelete() {
+            return confirm("Da li ste sigurni da želite obrisati artikl iz košarice");
+        }
+        function confirmDeleteAll() {
+            return confirm("Da li ste sigurni da želite obrisati cijelu košaricu");
+        }
+        function confirmBuy() {
+            return confirm("Da li ste sigurni da želite kupiti artikle iz košarice");
+        }
+    </script>
+</div>
+</body>
+</html>
