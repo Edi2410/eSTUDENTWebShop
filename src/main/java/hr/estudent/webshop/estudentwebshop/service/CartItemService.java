@@ -1,8 +1,6 @@
 package hr.estudent.webshop.estudentwebshop.service;
 
-import hr.estudent.webshop.estudentwebshop.models.Article;
 import hr.estudent.webshop.estudentwebshop.models.CartItem;
-import hr.estudent.webshop.estudentwebshop.models.User;
 import hr.estudent.webshop.estudentwebshop.repository.CartItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -4,7 +4,6 @@ import hr.estudent.webshop.estudentwebshop.models.CartItem;
 import hr.estudent.webshop.estudentwebshop.models.Purchase;
 import hr.estudent.webshop.estudentwebshop.models.PurchaseItem;
 import hr.estudent.webshop.estudentwebshop.publisher.CustomSpringEventPublisher;
-import hr.estudent.webshop.estudentwebshop.service.ArticleService;
 import hr.estudent.webshop.estudentwebshop.service.CartItemService;
 import hr.estudent.webshop.estudentwebshop.service.MyUserDetailsService;
 import hr.estudent.webshop.estudentwebshop.service.PurchaseService;
@@ -102,9 +101,6 @@ public class CartController {
 
         return "redirect:/cart";
     }
-
-
-
 
 
 }

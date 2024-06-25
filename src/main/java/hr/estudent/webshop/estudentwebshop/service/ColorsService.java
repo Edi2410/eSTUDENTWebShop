@@ -1,8 +1,6 @@
 package hr.estudent.webshop.estudentwebshop.service;
 
-import hr.estudent.webshop.estudentwebshop.models.Categories;
 import hr.estudent.webshop.estudentwebshop.models.Colors;
-import hr.estudent.webshop.estudentwebshop.repository.CategoriesRepository;
 import hr.estudent.webshop.estudentwebshop.repository.ColorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

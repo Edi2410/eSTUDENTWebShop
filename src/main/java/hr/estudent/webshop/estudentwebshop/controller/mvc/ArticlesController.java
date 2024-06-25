@@ -1,7 +1,6 @@
 package hr.estudent.webshop.estudentwebshop.controller.mvc;
 
 import hr.estudent.webshop.estudentwebshop.models.Article;
-import hr.estudent.webshop.estudentwebshop.models.CartItem;
 import hr.estudent.webshop.estudentwebshop.publisher.CustomSpringEventPublisher;
 import hr.estudent.webshop.estudentwebshop.service.ArticleService;
 import hr.estudent.webshop.estudentwebshop.service.CategoriesService;
@@ -25,7 +24,7 @@ public class ArticlesController {
     @Autowired
     private ArticleService articleService;
     @Autowired
-    private  MyUserDetailsService userDetailsService;
+    private MyUserDetailsService userDetailsService;
     @Autowired
     private ColorsService colorsService;
     @Autowired
@@ -41,7 +40,7 @@ public class ArticlesController {
         String[] roles = userDetailsService.findUsersRoles();
         boolean isAdmin = Arrays.stream(roles).anyMatch(role -> role.equals(RolesEnum.ADMIN.name()));
 
-        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("articles", articleService.findAllArticles());
         publisher.publishCustomEvent("ArticleController :: List articles screen displayed!");
         return "home";
@@ -51,7 +50,7 @@ public class ArticlesController {
     public String viewArticlesAdmin(Model model) {
         String[] roles = userDetailsService.findUsersRoles();
         boolean isAdmin = Arrays.stream(roles).anyMatch(role -> role.equals(RolesEnum.ADMIN.name()));
-        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("articles", articleService.findAllArticles());
         publisher.publishCustomEvent("ArticleController :: List articles screen displayed!");
         return "articles/list";

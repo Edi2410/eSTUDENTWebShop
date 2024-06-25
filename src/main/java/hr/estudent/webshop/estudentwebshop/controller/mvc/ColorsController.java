@@ -1,8 +1,7 @@
 package hr.estudent.webshop.estudentwebshop.controller.mvc;
 
-import hr.estudent.webshop.estudentwebshop.exceptions.CategoryInUseException;
+
 import hr.estudent.webshop.estudentwebshop.exceptions.ColorInUseException;
-import hr.estudent.webshop.estudentwebshop.models.Categories;
 import hr.estudent.webshop.estudentwebshop.models.Colors;
 import hr.estudent.webshop.estudentwebshop.publisher.CustomSpringEventPublisher;
 import hr.estudent.webshop.estudentwebshop.service.ColorsService;
@@ -32,7 +31,7 @@ public class ColorsController {
         String[] roles = userDetailsService.findUsersRoles();
         boolean isAdmin = Arrays.stream(roles).anyMatch(role -> role.equals(RolesEnum.ADMIN.name()));
 
-        model.addAttribute("isAdmin",isAdmin);
+        model.addAttribute("isAdmin", isAdmin);
         model.addAttribute("colors", colorsService.findAllColor());
         publisher.publishCustomEvent("ColorsController :: List colors screen displayed!");
         return "colors/list";
@@ -59,6 +58,7 @@ public class ColorsController {
         publisher.publishCustomEvent("ColorsController :: Edit color screen displayed!");
         return "colors/edit";
     }
+
     @PostMapping("/admin/edit/{id}")
     public String updateColor(@PathVariable() Long id, @ModelAttribute() Colors color) {
         colorsService.updateColor(id, color);
@@ -72,7 +72,7 @@ public class ColorsController {
             colorsService.deleteColor(id);
             publisher.publishCustomEvent("ColorsController :: Delete Color done!");
             return "redirect:/colors";
-        } catch (ColorInUseException e){
+        } catch (ColorInUseException e) {
             model.addAttribute("error", e.getMessage());
             publisher.publishCustomEvent("ColorsController :: Delete Color failed!");
             return "error";

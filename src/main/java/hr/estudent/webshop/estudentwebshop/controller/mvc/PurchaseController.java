@@ -2,12 +2,8 @@ package hr.estudent.webshop.estudentwebshop.controller.mvc;
 
 import hr.estudent.webshop.estudentwebshop.publisher.CustomSpringEventPublisher;
 import hr.estudent.webshop.estudentwebshop.service.MyUserDetailsService;
-import hr.estudent.webshop.estudentwebshop.service.PurchaseItemService;
 import hr.estudent.webshop.estudentwebshop.service.PurchaseService;
-import hr.estudent.webshop.estudentwebshop.utils.PurchaseEnum;
-import hr.estudent.webshop.estudentwebshop.utils.RolesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.Date;
 
 @Controller
@@ -42,11 +37,11 @@ public class PurchaseController {
 
     @PostMapping("/admin")
     public String viewPurchaseAdminSearch(
-                                         @RequestParam(required = false) Long userId,
-                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
-                                         @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
-                                         @RequestParam(required = false) String paymentMethod,
-                                         Model model) {
+            @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
+            @RequestParam(required = false) String paymentMethod,
+            Model model) {
 
         model.addAttribute("userId", userId);
         model.addAttribute("startDate", startDate);
@@ -55,8 +50,6 @@ public class PurchaseController {
 
         LocalDate start = startDate != null ? startDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate() : null;
         LocalDate end = endDate != null ? endDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate() : null;
-
-
 
         model.addAttribute("purchases", purchaseService.filterPurchases(userId, start, end, paymentMethod));
         model.addAttribute("users", userDetailsService.getAllUsers());
@@ -87,7 +80,7 @@ public class PurchaseController {
         model.addAttribute("endDate", endDate);
         model.addAttribute("paymentMethod", paymentMethod);
 
-        LocalDate start =startDate != null ? startDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate() : null;
+        LocalDate start = startDate != null ? startDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate() : null;
         LocalDate end = endDate != null ? endDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate() : null;
 
         model.addAttribute("purchases", purchaseService.filterPurchases(null, start, end, paymentMethod));
