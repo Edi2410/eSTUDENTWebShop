@@ -33,7 +33,4 @@ public class UserLogService {
         return userLogRepository.findAll();
     }
 
-    public UserLog findUserLogById(Long id) {
-        return userLogRepository.findById(id).orElse(null);
-    }
 }

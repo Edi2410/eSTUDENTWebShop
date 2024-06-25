@@ -20,11 +20,6 @@ public class CartItemService {
     @Autowired
     private ArticleService articleService;
 
-    public void updateCart(Long id, CartItem cartItem) {
-        cartItem.setId(id);
-        cartItemRepository.save(cartItem);
-    }
-
     public List<CartItem> findAllCartItems() {
         return cartItemRepository.findAll();
     }
